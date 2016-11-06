@@ -23,10 +23,18 @@ class MapView: UIViewController {
         locationArray.removeLast()
         
         // Drop a pin at each stop
-        for (var i = 0; i < locationArray.count; i = +1) {
-            print(locationArray[i].textField.text!)
+        /*
+         for (index, value) in shoppingList.enumerated() {
+         print("Item \(index + 1): \(value)")
+         }
+         */
+//        for (var i = 0; i < locationArray.count; i = +1) {
+        for (i) in locationArray {
+//            print(locationArray[i].textField.text!)
+            print(i.textField.text!)
             
-            let address = locationArray[i].textField.text!
+//            let address = locationArray[i].textField.text!
+            let address = i.textField.text!
             let geocoder = CLGeocoder()
             
             geocoder.geocodeAddressString(address, completionHandler: {(placemarks, error) -> Void in
