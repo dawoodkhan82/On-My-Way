@@ -18,17 +18,17 @@ class ViewController: UIViewController, UITextFieldDelegate{
 
     
     
-    @IBAction func addTaskAction(sender: AnyObject) {
+    @IBAction func addTaskAction(_ sender: AnyObject) {
         addTaskPressed = true
     }
     
     
     let locationManager = CLLocationManager()
     
-    var locationTuples: [(textField: UITextField!, mapItem: MKMapItem?)]!
+    var locationTuples: [(textField: UITextField?, mapItem: MKMapItem?)]!
     
     
-    var locationsArray: [(textField: UITextField!, mapItem: MKMapItem?)] {
+    var locationsArray: [(textField: UITextField?, mapItem: MKMapItem?)] {
         var filtered = locationTuples.filter({ $0.mapItem != nil })
         filtered += [filtered.first!]
         return filtered
@@ -53,40 +53,40 @@ class ViewController: UIViewController, UITextFieldDelegate{
             destinationField2.text = yelpDestination2
         }
         
-        if (endDestination.isEmpty) {
-            print("No end destination was entered")
-        } else {
+//        if (endDestination.isEmpty) {
+//            print("No end destination was entered")
+//        } else {
             finalDestinationField.text = endDestination
-        }
+//        }
     
     }
     
     
     
-    @IBAction func getDirections(sender: AnyObject) {
+    @IBAction func getDirections(_ sender: AnyObject) {
         view.endEditing(true)
-        performSegueWithIdentifier("show_directions", sender: self)
+        performSegue(withIdentifier: "show_directions", sender: self)
     }
 
     
     
-    @IBAction func swapFields(sender: AnyObject) {
+    @IBAction func swapFields(_ sender: AnyObject) {
         swap(&destinationField1.text, &destinationField2.text)
         swap(&locationTuples[1].mapItem, &locationTuples[2].mapItem)
-        swap(&self.enterButtonArray.filter{$0.tag == 2}.first!.selected, &self.enterButtonArray.filter{$0.tag == 3}.first!.selected)
+        swap(&self.enterButtonArray.filter{$0.tag == 2}.first!.isSelected, &self.enterButtonArray.filter{$0.tag == 3}.first!.isSelected)
     }
     
-    @IBAction func addressEntered(sender: AnyObject){
+    @IBAction func addressEntered(_ sender: AnyObject){
         view.endEditing(true)
         let currentTextField = locationTuples[sender.tag-1].textField
-        CLGeocoder().geocodeAddressString(currentTextField.text!,
-            completionHandler: {(placemarks: [CLPlacemark]?, error: NSError?) -> Void in
+        CLGeocoder().geocodeAddressString(currentTextField!.text!,
+            completionHandler: {(placemarks, error) -> Void in
                 if let placemarks = placemarks {
                     var addresses = [String]()
                     for placemark in placemarks {
                         addresses.append(self.formatAddressFromPlacemark(placemark))
                     }
-                    self.showAddressTable(addresses, textField: currentTextField,
+                    self.showAddressTable(addresses, textField: currentTextField!,
                         placemarks: placemarks, sender: sender as! UIButton)
                     //--------------------
                     if (sender.tag == 4) {
@@ -103,10 +103,10 @@ class ViewController: UIViewController, UITextFieldDelegate{
         
     }
     
-    func showAddressTable(addresses: [String], textField: UITextField,
+    func showAddressTable(_ addresses: [String], textField: UITextField,
         placemarks: [CLPlacemark], sender: UIButton) {
             
-            let addressTableView = AddressTableView(frame: UIScreen.mainScreen().bounds, style: UITableViewStyle.Plain)
+            let addressTableView = AddressTableView(frame: UIScreen.main.bounds, style: UITableViewStyle.plain)
             addressTableView.addresses = addresses
             addressTableView.currentTextField = textField
             addressTableView.placemarkArray = placemarks
@@ -119,36 +119,36 @@ class ViewController: UIViewController, UITextFieldDelegate{
     
 
     
-    func formatAddressFromPlacemark(placemark: CLPlacemark) -> String {
+    func formatAddressFromPlacemark(_ placemark: CLPlacemark) -> String {
         return (placemark.addressDictionary!["FormattedAddressLines"] as!
-            [String]).joinWithSeparator(", ")
+            [String]).joined(separator: ", ")
     }
     
     
-    func showAlert(alertString: String) {
-        let alert = UIAlertController(title: nil, message: alertString, preferredStyle: .Alert)
+    func showAlert(_ alertString: String) {
+        let alert = UIAlertController(title: nil, message: alertString, preferredStyle: .alert)
         let okButton = UIAlertAction(title: "OK",
-            style: .Cancel) { (alert) -> Void in
+            style: .cancel) { (alert) -> Void in
         }
         alert.addAction(okButton)
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
     func dissmissKeyboard() {
         finalDestinationField.resignFirstResponder()
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         finalDestinationField.resignFirstResponder()
         return true
     }
 
     
 
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         
         if (addTaskPressed == true) {
-            true
+            return true
         }else if locationTuples[0].mapItem == nil ||
             (locationTuples[1].mapItem == nil && locationTuples[2].mapItem == nil) {
                 showAlert("Please enter a valid starting point and at least one destination.")
@@ -156,15 +156,15 @@ class ViewController: UIViewController, UITextFieldDelegate{
         } else {
             return true
         }
-        return true
+        //return true
     }
     
     
 //    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (addTaskPressed == false) {
-            let mapViewController = segue.destinationViewController as! MapView
+            let mapViewController = segue.destination as! MapView
             mapViewController.locationArray = locationsArray
         }
     }
@@ -203,15 +203,15 @@ class ViewController: UIViewController, UITextFieldDelegate{
 
 extension ViewController: CLLocationManagerDelegate {
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         CLGeocoder().reverseGeocodeLocation(locations.last!,
-            completionHandler: {(placemarks:[CLPlacemark]?, error:NSError?) -> Void in
+            completionHandler: {(placemarks, error) -> Void in
                 if let placemarks = placemarks {
                     let placemark = placemarks[0]
                     self.locationTuples[0].mapItem = MKMapItem(placemark:
                         MKPlacemark(coordinate: placemark.location!.coordinate,addressDictionary: placemark.addressDictionary as! [String:AnyObject]?))
                     self.startField.text = self.formatAddressFromPlacemark(placemark)
-                    self.enterButtonArray.filter{$0.tag == 1}.first!.selected = true
+                    self.enterButtonArray.filter{$0.tag == 1}.first!.isSelected = true
                     
                     print(self.formatAddressFromPlacemark(placemark))
                 }
@@ -219,7 +219,7 @@ extension ViewController: CLLocationManagerDelegate {
         })
     }
     
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
     }
 }
