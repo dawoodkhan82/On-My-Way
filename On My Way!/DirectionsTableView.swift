@@ -18,7 +18,7 @@ class DirectionsTableView: UITableView {
 
 extension DirectionsTableView: UITableViewDelegate {
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 40
     }
     
@@ -56,48 +56,48 @@ extension DirectionsTableView: UITableViewDelegate {
 //        return label
 //    }
     
-    func setLabelBackgroundColor(label: UILabel, section: Int) {
+    func setLabelBackgroundColor(_ label: UILabel, section: Int) {
         switch section {
         case 0:
-            label.backgroundColor = UIColor.blueColor().colorWithAlphaComponent(0.75)
+            label.backgroundColor = UIColor.blue.withAlphaComponent(0.75)
         case 1:
-            label.backgroundColor = UIColor.greenColor().colorWithAlphaComponent(0.75)
+            label.backgroundColor = UIColor.green.withAlphaComponent(0.75)
         default:
-            label.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.75)
+            label.backgroundColor = UIColor.red.withAlphaComponent(0.75)
         }
     }
 }
 
 extension DirectionsTableView: UITableViewDataSource {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return directionsArray.count
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return directionsArray[section].route.steps.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("DirectionCell") as UITableViewCell!
-        cell.textLabel?.numberOfLines = 4
-        cell.textLabel?.font = UIFont(name: "HoeflerText-Regular", size: 12)
-        cell.userInteractionEnabled = false
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DirectionCell") as UITableViewCell!
+        cell?.textLabel?.numberOfLines = 4
+        cell?.textLabel?.font = UIFont(name: "HoeflerText-Regular", size: 12)
+        cell?.isUserInteractionEnabled = false
         
         let steps = directionsArray[indexPath.section].route.steps
         let step = steps[indexPath.row]
         let instructions = step.instructions
         let distance = step.distance.miles()
-        cell.textLabel?.text = "\(indexPath.row+1). \(instructions) - \(distance) miles"
+        cell?.textLabel?.text = "\(indexPath.row+1). \(instructions) - \(distance) miles"
         
-        return cell
+        return cell!
     }
 }
 
 extension Float {
-    func format(f: String) -> String {
-        return NSString(format: "%\(f)f", self) as String
+    func format(_ f: String) -> String {
+        return NSString(format: "%\(f)f" as NSString, self) as String
     }
 }
 
@@ -108,12 +108,12 @@ extension CLLocationDistance {
     }
 }
 
-extension NSTimeInterval {
+extension TimeInterval {
     func formatted() -> String {
-        let formatter = NSDateComponentsFormatter()
-        formatter.unitsStyle = .Full
-        formatter.allowedUnits = [NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second]
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .full
+        formatter.allowedUnits = [NSCalendar.Unit.hour, NSCalendar.Unit.minute, NSCalendar.Unit.second]
         
-        return formatter.stringFromTimeInterval(self)!
+        return formatter.string(from: self)!
     }
 }
