@@ -260,18 +260,18 @@
 					8E41885A1CD1241500E1AC24 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = RHW8FBGSTX;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0830;
 					};
 					8E4188711CD1241600E1AC24 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = RHW8FBGSTX;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0830;
 						TestTargetID = 8E41885A1CD1241500E1AC24;
 					};
 					8E41887C1CD1241600E1AC24 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = RHW8FBGSTX;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0830;
 						TestTargetID = 8E41885A1CD1241500E1AC24;
 					};
 				};
@@ -531,12 +531,13 @@
 			baseConfigurationReference = A7A25E4CD1B7C41AD28A6B51 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = RHW8FBGSTX;
 				INFOPLIST_FILE = "On My Way!/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dawoodk.On-My-Way-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -545,12 +546,13 @@
 			baseConfigurationReference = 6D47B7BF35E6B98A6230B439 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = RHW8FBGSTX;
 				INFOPLIST_FILE = "On My Way!/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dawoodk.On-My-Way-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -562,7 +564,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dawoodk.On-My-Way-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/On My Way!.app/On My Way!";
 			};
 			name = Debug;
@@ -575,7 +577,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dawoodk.On-My-Way-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/On My Way!.app/On My Way!";
 			};
 			name = Release;
@@ -587,7 +589,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dawoodk.On-My-Way-UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = "On My Way!";
 				USES_XCTRUNNER = YES;
 			};
@@ -600,7 +602,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dawoodk.On-My-Way-UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = "On My Way!";
 				USES_XCTRUNNER = YES;
 			};
