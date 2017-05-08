@@ -33,7 +33,7 @@ class YelpSearchViewController: UIViewController, UITableViewDelegate, UITableVi
 
     }
         
-        @IBAction func enterSearch(sender: AnyObject) {
+        @IBAction func enterSearch(_ sender: AnyObject) {
             enterPressed = true
             self.yelpTable.reloadData()
             
@@ -41,27 +41,27 @@ class YelpSearchViewController: UIViewController, UITableViewDelegate, UITableVi
     
     
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 10
     }
         
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.numberOfLines = 0
-        cell.textLabel?.lineBreakMode  = NSLineBreakMode.ByWordWrapping
+        cell.textLabel?.lineBreakMode  = NSLineBreakMode.byWordWrapping
         
         if enterPressed == true {
             
         if yelpSearchField.text != nil {
             
-            Business.searchWithTerm(self.yelpSearchField.text!, completion: { (businesses: [Business]!, error: NSError!) -> Void in
+            Business.searchWithTerm(term: self.yelpSearchField.text!, completion: { (businesses: [Business]?, error: Error?) -> Void in
                 self.businesses = businesses
                 
-                for business in businesses {
+                for business in businesses! {
                     
-                    cell.textLabel?.text =  "\(businesses[indexPath.row].name!), Address: \(businesses[indexPath.row].address!)"
+                    cell.textLabel?.text =  "\(businesses![indexPath.row].name!), Address: \(businesses![indexPath.row].address!)"
                     
                 }
             })
@@ -71,7 +71,7 @@ class YelpSearchViewController: UIViewController, UITableViewDelegate, UITableVi
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         if yelpDestination1 == "" {
             yelpDestination1 = businesses[indexPath.row].address!
@@ -82,7 +82,7 @@ class YelpSearchViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         
         
-        performSegueWithIdentifier("show_view", sender: self)
+        performSegue(withIdentifier: "show_view", sender: self)
 
 
 
@@ -94,7 +94,7 @@ class YelpSearchViewController: UIViewController, UITableViewDelegate, UITableVi
         yelpSearchField.resignFirstResponder()
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         yelpSearchField.resignFirstResponder()
         return true
     }
