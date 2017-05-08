@@ -125,8 +125,16 @@ class MapView: UIViewController {
         var directionsArray = [(startingAddress: String, endingAddress: String, route: MKRoute)]()
         for i in 0..<routes.count {
             plotPolyline(routes[i])
-            directionsArray += [(locationArray[i].textField?.text!,
-                endAddress: locationArray[i+1].textField?.text!, route: routes[i])]
+//            directionsArray += [(locationArray[i].textField?.text!,
+//                endAddress: locationArray[i+1].textField?.text!, route: routes[i])]
+            
+            
+            directionsArray = [(startingAddress:(locationArray[i].textField!.text!),
+                                endingAddress: (locationArray[i+1].textField!.text!), route: routes[i])]
+            
+            
+//            directionsArray += [(startingAddress: locationArray[index].textField?.text!, endingAddress: locationArray[index+1].textField?.text!, route: routes[index])]
+            
         }
         displayDirections(directionsArray)
         printTimeToLabel(time)
